@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Unit Test Review — If Statements</title>
+<style>
+:root{--ink:#182338;--muted:#63718a;--line:#dce3ee;--paper:#fff;--bg:#f3f6fb;--blue:#2457c5;--blue2:#eaf0ff;--green:#147a4b;--red:#b42332;--amber:#8a5a00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(125deg,#172b55,#2457c5);color:#fff;padding:34px 20px}
+.wrap{max-width:980px;margin:auto;padding:0 18px}h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.12;margin:0 0 10px}header p{margin:0;color:#e2eaff;max-width:720px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{background:#ffffff20;border:1px solid #ffffff40;border-radius:99px;padding:5px 11px;font-size:.86rem}
+main{padding:24px 0 60px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:18px;position:sticky;top:8px;z-index:5;box-shadow:0 5px 18px #1d31500c}
+.progress{height:8px;background:#e7ebf3;border-radius:9px;overflow:hidden;flex:1;min-width:110px}.progress span{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:0;border-radius:9px;padding:10px 14px;font-weight:650;cursor:pointer;background:var(--blue);color:white}button.secondary{background:#edf1f8;color:var(--ink)}button.outline{background:white;color:var(--blue);border:1px solid #b8c8ef}button:hover{filter:brightness(.96)}
+.section{margin:22px 0 12px;font-size:1.3rem}.section small{font-size:.85rem;color:var(--muted);font-weight:500}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 3px 12px #1d315008}
+.qhead{display:flex;gap:10px;align-items:flex-start}.num{background:var(--blue2);color:var(--blue);font-weight:800;border-radius:8px;padding:3px 9px;min-width:34px;text-align:center}.qtitle{font-weight:650;flex:1}.tag{font-size:.75rem;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.options{display:grid;gap:8px;margin:14px 0 4px}.option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);padding:10px 12px;border-radius:9px;cursor:pointer}.option:hover{background:#f7f9fd}.option input{margin-top:5px;accent-color:var(--blue)}input[type=text],select{font:inherit;padding:10px 11px;border:1px solid #bdc8d8;border-radius:8px;background:#fff;max-width:100%}.answerline{margin:13px 0}.answerline input{width:min(100%,480px)}pre{background:#111c30;color:#e6efff;border-radius:10px;padding:15px;overflow:auto;font:14px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;margin:13px 0}
+.feedback{display:none;margin-top:13px;padding:12px 14px;border-radius:10px;border-left:4px solid}.feedback.show{display:block}.feedback.correct{background:#eaf7f0;border-color:var(--green)}.feedback.wrong{background:#fff0f0;border-color:var(--red)}.feedback strong{display:block;margin-bottom:4px}.explain{color:#34435a}.muted{color:var(--muted)}.wordbank{background:#f4f6fa;border:1px dashed #b9c4d5;padding:10px 12px;border-radius:9px;margin:12px 0}.result{display:none;background:#fff;border:2px solid #b8c8ef;border-radius:16px;padding:22px;margin:24px 0}.result.show{display:block}.score{font-size:2.2rem;font-weight:800;color:var(--blue)}.reviewlist{padding-left:20px}.footer{color:var(--muted);font-size:.88rem;text-align:center;margin-top:30px}
+@media(max-width:620px){.toolbar{position:static}.qhead{flex-wrap:wrap}.tag{margin-left:44px}.card{padding:14px}}
+@media print{body{background:#fff}.toolbar,button,.pills{display:none!important}.card,.result{break-inside:avoid;box-shadow:none}.feedback{display:block!important}header{background:#fff;color:#111;padding:10px 0}header p{color:#333}.wrap{max-width:none}main{padding-top:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>Java Unit Test Review</h1>
+<p><strong>Unit: If Statements & Boolean Expressions</strong><br>Practice the concepts, trace Java code, and check your understanding with explanations after submitting.</p>
+<div class="pills"><span class="pill">TEJ2O1 • Java</span><span class="pill">Interactive practice</span><span class="pill">Instant feedback</span><span class="pill">Saveable report</span></div>
+</div></header>
+<main class="wrap">
+<div class="toolbar">
+  <div style="min-width:130px"><strong id="answeredCount">0 / 30 answered</strong><div class="muted" style="font-size:.8rem">Progress</div></div>
+  <div class="progress"><span id="progressBar"></span></div>
+  <div class="actions"><button class="secondary" onclick="saveProgress()">Save progress</button><button class="outline" onclick="resetQuiz()">Reset</button></div>
+</div>
+<div id="quiz"></div>
+<div class="actions" style="justify-content:center;margin:26px 0"><button onclick="gradeQuiz()">Submit answers & see results</button></div>
+<section class="result" id="result" aria-live="polite">
+<h2>Your results</h2><div class="score" id="score"></div><p id="summary"></p><div id="breakdown"></div>
+<div class="actions"><button onclick="downloadReport()">Download report</button><button class="secondary" onclick="window.print()">Print / Save as PDF</button></div>
+<p class="muted">The report includes your selected answers, correct answers, and explanations. Download it before closing the page to keep a permanent copy.</p>
+</section>
+<div class="footer">Built from the supplied “If Statements Upd” PowerPoint and IfStatementEx.java example. Works offline in a modern browser.</div>
+</main>
+<script>
+const questions = [
+{section:"Part A — True or False",type:"tf",q:"A Boolean expression evaluates to either true or false.",a:"True",why:"Boolean expressions always produce one of two values: true or false. They are used to test conditions in a program.",wrong:"False is incorrect because a Boolean expression cannot evaluate to a number or a String."},
+{type:"tf",q:"The numeric operator == means “not equal to.”",a:"False",why:"For numeric values, == means equal to. The != operator means not equal to.",wrong:"Remember the distinction: == checks equality; != checks inequality."},
+{type:"tf",q:"To compare two Java String values for equality, use name1.equals(name2).",a:"True",why:"The PowerPoint specifically teaches .equals() for String equality. It warns that == does not work for comparing String contents.",wrong:"Using == is not the String comparison method taught here. Use name1.equals(name2)."},
+{type:"tf",q:"The && operator means that at least one of the two conditions must be true.",a:"False",why:"&& means AND: both Boolean expressions must be true. The || operator means OR: at least one must be true.",wrong:"“At least one” describes ||, not &&."},
+{type:"tf",q:"An if block runs only when its Boolean condition is true.",a:"True",why:"If the condition is true, Java executes the statements inside the braces. If false, it skips the block and continues after it.",wrong:"An if block does not run when its condition is false."},
+{type:"tf",q:"The else block runs when none of the preceding if / else if conditions is true.",a:"True",why:"The final else is the fallback branch. It runs only if all earlier tested conditions are false.",wrong:"The else branch is the fallback when none of the preceding conditions succeeds."},
+{type:"tf",q:"The numeric comparison operator >= means strictly greater than.",a:"False",why:">= means greater than OR equal to. The strictly-greater-than operator is >.",wrong:"The equals bar matters: >= includes values equal to the boundary."},
+{type:"tf",q:"In the supplied login program, a user must match one of the two stored usernames before the program asks for a password.",a:"True",why:"The first condition checks input_user.equals(user1) || input_user.equals(user2). The password prompt is inside that if block.",wrong:"The username check happens first. The password is requested only for Mary or Tim."},
+
+{section:"Part B — Multiple Choice",type:"mc",q:"Which operator means “less than or equal to” when comparing numbers?",opts:["<",">=","<=","!="],a:"<=",why:"<= means less than or equal to. It accepts values below the boundary and the boundary itself.",wrong:"< means strictly less than; >= means greater than or equal to; != means not equal to."},
+{type:"mc",q:"Which expression correctly checks whether the String variable login contains the same text as userName?",opts:["login == userName","login.equals(userName)","login = userName","equals.login(userName)"],a:"login.equals(userName)",why:"For String equality, call .equals() on one String and pass the other String as its argument.",wrong:"== is not the correct String-content comparison taught in the slides. A single = is assignment, not an equality test."},
+{type:"mc",q:"Which expression is true when weight is greater than 180 AND height is less than 200?",opts:["weight > 180 || height < 200","weight > 180 && height < 200","weight < 180 && height > 200","weight == 180 || height == 200"],a:"weight > 180 && height < 200",why:"&& requires both comparisons to be true, exactly matching the word AND.",wrong:"|| means OR, and the other choices reverse or change the comparisons."},
+{type:"mc",q:"Which expression is true when age is at least 18 but less than 19?",opts:["age > 18 && age < 19","age >= 18 && age < 19","age >= 18 || age < 19","age == 18 && age == 19"],a:"age >= 18 && age < 19",why:"At least 18 means >= 18. Less than 19 means < 19. Both must be true, so use &&.",wrong:"The lower boundary must include 18, and both boundaries must be satisfied."},
+{type:"mc",q:"What does this condition mean: score > 50 || bonus == 10 ?",opts:["Score must be over 50 and bonus must equal 10","Score is over 50 or bonus equals 10, or both","Score must equal 50","Neither condition can be true"],a:"Score is over 50 or bonus equals 10, or both",why:"|| is OR. The whole expression is true if at least one comparison is true; both may also be true.",wrong:"The || operator does not require both expressions to be true. That is &&."},
+{type:"mc",q:"What is displayed by this code when num is 14?",code:"if (num >= 14) {\\n    System.out.println(\"High\");\\n}\\nSystem.out.println(\"Low\");",opts:["High only","Low only","High, then Low","Nothing"],a:"High, then Low",why:"14 >= 14 is true, so High is printed. Low is outside the if block, so it prints afterward regardless of the condition.",wrong:"The second println is not inside the braces, so it runs whether the condition is true or false."},
+{type:"mc",q:"Which condition checks whether the entered username is Mary OR Tim?",code:"String user1 = \"Mary\";\\nString user2 = \"Tim\";",opts:["input_user.equals(user1) && input_user.equals(user2)","input_user.equals(user1) || input_user.equals(user2)","input_user == user1 || user2","input_user.equals(user1)"],a:"input_user.equals(user1) || input_user.equals(user2)",why:"The username can match either stored username, so use two .equals() comparisons joined with OR (||).",wrong:"&& would require the same input to equal both Mary and Tim at once. Use .equals() for String comparisons."},
+
+{section:"Part C — Matching",type:"match",q:"Match each Java term or operator to its meaning.",pairs:[["&&","Both Boolean conditions must be true"],["||","At least one Boolean condition must be true"],["!=","Not equal to"],[".equals()","Compares the contents of two Strings"],["else","Runs when preceding if / else if conditions are false"]],why:"These are the meanings used in the PowerPoint: && is AND, || is OR, != is numeric not-equal, .equals() compares String contents, and else is the fallback branch."},
+{type:"match",q:"Match each numeric comparator to its meaning.",pairs:[["<","Less than"],[">","Greater than"],["<=","Less than or equal to"],[">=","Greater than or equal to"],["==","Equal to"]],why:"These are the six numeric comparators listed in the PowerPoint. Be careful not to confuse strict comparisons (< and >) with inclusive comparisons (<= and >=)."},
+{type:"match",q:"Match each login-program variable to what it stores.",pairs:[["user1","The first stored username: Mary"],["user2","The second stored username: Tim"],["pass1","The first stored password: hello"],["pass2","The second stored password: goodbye"]],why:"The Java example declares two usernames and their corresponding passwords. The program checks each username with its matching password."},
+
+{section:"Part D — Fill in the Blanks",type:"fill",q:"A Boolean expression evaluates to either ______ or false.",a:"true",why:"A Boolean expression has exactly two possible values: true and false.",wrong:"The missing Boolean value is true."},
+{type:"fill",q:"To compare the contents of two String variables, use the ______ method.",a:"equals",accept:["equals()"],why:"The slides show name1.equals(name2). The method name is equals.",wrong:"Do not use == for String content comparison. Use .equals()."},
+{type:"fill",q:"The operator ______ means AND in a compound Boolean expression.",a:"&&",why:"&& requires both Boolean expressions to be true.",wrong:"|| means OR. The AND operator is &&."},
+{type:"fill",q:"The operator ______ means OR in a compound Boolean expression.",a:"||",why:"|| makes the combined expression true when at least one Boolean expression is true.",wrong:"&& means AND. The OR operator is ||."},
+{type:"fill",q:"The final fallback branch in an if / else if structure begins with the keyword ______.",a:"else",why:"else runs when none of the earlier conditions is true.",wrong:"The fallback keyword is else."},
+
+{section:"Part E — Read the Java Code",type:"mc",q:"In the supplied IfStatementEx.java program, what happens if the user enters Mary and then hello?",code:"if (input_user.equals(user1) || input_user.equals(user2)) {\\n    input_pass = sc.next();\\n    if (input_user.equals(user1) && input_pass.equals(pass1)) {\\n        System.out.println(\"Welcome Mary!\");\\n    }\\n}",opts:["Not a user. Bye! Bye!","Welcome Mary!","Welcome Tim!","Not a valid password. Bye! Bye!"],a:"Welcome Mary!",why:"Mary matches user1, and hello matches pass1. Both parts of the inner && condition are true, so the program prints Welcome Mary!",wrong:"Mary is a valid username, and hello is Mary’s stored password. The Mary branch succeeds."},
+{type:"mc",q:"In the supplied login program, what is printed if the username is Tim and the password is hello?",opts:["Welcome Mary!","Welcome Tim!","Not a valid password. Bye! Bye!","Not a user. Bye! Bye!"],a:"Not a valid password. Bye! Bye!",why:"Tim is a valid username, so the program asks for a password. But Tim must use pass2, which is goodbye. hello is pass1 for Mary, so neither successful inner condition matches.",wrong:"The username is valid, so this is not “Not a user.” The password does not match Tim’s password."},
+{type:"mc",q:"In the supplied login program, what happens if the username is Alex?",opts:["The program asks for a password","Welcome Mary!","Not a user. Bye! Bye!","Not a valid password. Bye! Bye!"],a:"Not a user. Bye! Bye!",why:"Alex matches neither user1 (Mary) nor user2 (Tim). The outer if condition is false, so the outer else prints Not a user. Bye! Bye!",wrong:"The outer username check fails, so the program does not ask for a password."},
+{type:"mc",q:"Consider this code. What is printed when num is 15?",code:"if (num >= 14) {\\n    System.out.println(\"High\");\\n} else {\\n    System.out.println(\"Low\");\\n}",opts:["High","Low","High then Low","No output"],a:"High",why:"15 >= 14 is true. Java executes the if block and skips the else block.",wrong:"Since 15 is greater than 14, the if condition is true."},
+{type:"mc",q:"Consider the same code. What is printed when num is -5?",code:"if (num >= 14) {\\n    System.out.println(\"High\");\\n} else {\\n    System.out.println(\"Low\");\\n}",opts:["High","Low","High then Low","No output"],a:"Low",why:"-5 >= 14 is false. The if block is skipped and the else block prints Low.",wrong:"A negative five is not greater than or equal to 14, so the else branch runs."},
+
+{section:"Part F — Apply Your Programming Knowledge",type:"mc",q:"You want a program to print “Adult” when age is 18 or older. Which condition is correct?",opts:["age > 18","age >= 18","age < 18","age == 18 || age < 18"],a:"age >= 18",why:"“18 or older” includes 18 and all larger values, so >= 18 is the correct condition.",wrong:"The > operator excludes exactly 18. The correct inclusive comparator is >=."},
+{type:"mc",q:"You want to check that a username is Mary AND the password is hello. Which condition is correct?",code:"String user = \"Mary\";\\nString password = \"hello\";",opts:["user.equals(\"Mary\") || password.equals(\"hello\")","user.equals(\"Mary\") && password.equals(\"hello\")","user == \"Mary\" && password == \"hello\"","user.equals(\"Mary\")"],a:"user.equals(\"Mary\") && password.equals(\"hello\")",why:"A successful login requires both the username and password to match, so join the two String .equals() checks with &&.",wrong:"OR would allow only one matching value. String contents should be checked with .equals()."},
+{type:"mc",q:"Which structure is best when you need to test a first condition, then a second condition only if the first is false, and otherwise use a fallback?",opts:["A single println statement","if ... else if ... else","A String declaration","A Scanner declaration"],a:"if ... else if ... else",why:"The PowerPoint presents if / else if / else for programs that need several conditions tested in order.",wrong:"The if / else if / else structure supports multiple ordered condition checks and a fallback."},
+{type:"mc",q:"A condition is written as level > 9. Which value is the smallest integer that makes it true?",opts:["8","9","10","11"],a:"10",why:"The > operator is strictly greater than. 9 itself does not satisfy level > 9, so the smallest integer that does is 10.",wrong:"The condition excludes 9 because it asks for greater than 9, not greater than or equal to 9."},
+{type:"mc",q:"Which condition is true when a timer has run out at exactly zero?",opts:["timer > 0","timer < 0","timer == 0","timer != 0"],a:"timer == 0",why:"The PowerPoint gives timer equals 0 as the Boolean expression for checking whether the timer has run out.",wrong:"== checks equality. The other choices test positive, negative, or nonzero values."}
+];
+
+const sections = [...new Set(questions.map(q=>q.section).filter(Boolean))];
+const answers = {};
+let graded = false;
+const escapeHtml = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function render(){
+ const root=document.getElementById('quiz');root.innerHTML='';let n=0;
+ questions.forEach((q,i)=>{
+   if(q.section){const h=document.createElement('h2');h.className='section';h.innerHTML=escapeHtml(q.section)+' <small>— '+(questions.filter(x=>x.section===q.section).length)+' questions</small>';root.appendChild(h)}
+   n++;const card=document.createElement('article');card.className='card';card.id='q'+i;
+   let body='';
+   if(q.code) body+='<pre>'+escapeHtml(q.code.replace(/\\n/g,'\n'))+'</pre>';
+   if(q.type==='tf'||q.type==='mc'){
+     const opts=q.type==='tf'?['True','False']:q.opts;
+     body+='<div class="options">'+opts.map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${escapeHtml(o)}" onchange="setAnswer(${i},this.value)"><span>${escapeHtml(o)}</span></label>`).join('')+'</div>';
+   } else if(q.type==='fill'){
+     body+=`<div class="answerline"><input type="text" aria-label="Answer for question ${i+1}" placeholder="Type your answer" oninput="setAnswer(${i},this.value)" id="input${i}"></div>`;
+   } else if(q.type==='match'){
+     body+='<div class="muted" style="margin:10px 0">Choose the matching description for each term.</div>';
+     const all=q.pairs.map(p=>p[1]);
+     body+=q.pairs.map((p,j)=>`<div class="answerline"><label><strong>${escapeHtml(p[0])}</strong><br><select aria-label="Match for ${escapeHtml(p[0])}" id="m${i}_${j}" onchange="setMatch(${i},${j},this.value)"><option value="">Choose a description…</option>${all.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('')}</select></label></div>`).join('');
+   }
+   card.innerHTML=`<div class="qhead"><span class="num">${i+1}</span><div class="qtitle">${escapeHtml(q.q)}</div><span class="tag">${({tf:'True / False',mc:'Multiple choice',fill:'Fill in',match:'Matching'})[q.type]}</span></div>${body}<div class="feedback" id="f${i}"></div>`;
+   root.appendChild(card);
+ });
+ loadProgress();updateProgress();
+}
+function setAnswer(i,v){answers[i]=v;updateProgress();if(graded)gradeQuiz()}
+function setMatch(i,j,v){if(!answers[i]||typeof answers[i]!=='object')answers[i]={};answers[i][j]=v;updateProgress();if(graded)gradeQuiz()}
+function isAnswered(i){const a=answers[i];if(a===undefined)return false;if(questions[i].type==='match')return questions[i].pairs.every((_,j)=>a[j]);return String(a).trim()!==''}
+function updateProgress(){const count=questions.filter((_,i)=>isAnswered(i)).length;document.getElementById('answeredCount').textContent=`${count} / ${questions.length} answered`;document.getElementById('progressBar').style.width=(count/questions.length*100)+'%'}
+function saveProgress(){localStorage.setItem('javaIfReviewProgress',JSON.stringify(answers));alert('Your answers have been saved in this browser on this device.')}
+function loadProgress(){try{const saved=JSON.parse(localStorage.getItem('javaIfReviewProgress')||'{}');Object.assign(answers,saved);questions.forEach((q,i)=>{const a=answers[i];if(q.type==='tf'||q.type==='mc'){document.querySelectorAll(`input[name="q${i}"]`).forEach(el=>el.checked=el.value===a)}else if(q.type==='fill'&&a!==undefined){document.getElementById('input'+i).value=a}else if(q.type==='match'&&a){q.pairs.forEach((_,j)=>{document.getElementById(`m${i}_${j}`).value=a[j]||''})}})}catch(e){}}
+function check(i){const q=questions[i],a=answers[i];if(q.type==='match')return q.pairs.every((p,j)=>a&&a[j]===p[1]);if(q.type==='fill'){const acceptable=[q.a,...(q.accept||[])].map(x=>x.toLowerCase().replace(/\s/g,''));return acceptable.includes(String(a||'').toLowerCase().replace(/\s/g,''))}return a===q.a}
+function correctAnswer(q){if(q.type==='match')return q.pairs.map(p=>p[0]+' → '+p[1]).join('; ');return q.a}
+function userAnswer(i){const q=questions[i],a=answers[i];if(q.type==='match')return q.pairs.map((p,j)=>p[0]+' → '+((a&&a[j])||'Not answered')).join('; ');return a||'Not answered'}
+function gradeQuiz(){
+ graded=true;let score=0,answered=0,by={};
+ questions.forEach((q,i)=>{const ok=check(i);if(ok)score++;if(isAnswered(i))answered++;by[q.section]=(by[q.section]||{score:0,total:0});by[q.section].total++;if(ok)by[q.section].score++;
+ const f=document.getElementById('f'+i);f.className='feedback show '+(ok?'correct':'wrong');
+ let detail=ok?(q.why||'Correct.'):(q.wrong||q.why||'Review the correct answer and explanation.');
+ if(!ok&&q.type==='match')detail='Check each pair carefully. '+q.why;
+ f.innerHTML=`<strong>${ok?'✓ Correct':'✗ Not quite'} — ${ok?'Well done!':'Correct answer: '+escapeHtml(correctAnswer(q))}</strong><div class="explain">${escapeHtml(detail)}</div>`;
+ });
+ const pct=Math.round(score/questions.length*100);document.getElementById('score').textContent=`${score} / ${questions.length} (${pct}%)`;
+ document.getElementById('summary').textContent=`You answered ${answered} of ${questions.length} questions. ${pct>=90?'Excellent work — you have a strong grasp of these topics.':pct>=75?'Good progress. Review the explanations for any missed questions.':pct>=60?'You are developing your understanding. Revisit the slides and try again.':'Keep practising. Focus on the explanations and work through the code examples again.'}`;
+ document.getElementById('breakdown').innerHTML='<h3>Section breakdown</h3><ul class="reviewlist">'+Object.entries(by).map(([k,v])=>`<li>${escapeHtml(k)}: ${v.score}/${v.total}</li>`).join('')+'</ul>';
+ document.getElementById('result').classList.add('show');document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});localStorage.setItem('javaIfReviewProgress',JSON.stringify(answers));
+}
+function downloadReport(){
+ if(!graded)gradeQuiz();
+ const rows=questions.map((q,i)=>{const ok=check(i);return `<section><h3>Question ${i+1}: ${escapeHtml(q.q)}</h3><p><b>Your answer:</b> ${escapeHtml(userAnswer(i))}</p><p><b>Correct answer:</b> ${escapeHtml(correctAnswer(q))}</p><p><b>Result:</b> ${ok?'Correct':'Incorrect'}</p><p><b>Explanation:</b> ${escapeHtml(ok?q.why:(q.wrong||q.why||''))}</p></section>`}).join('');
+ const pct=Math.round(questions.filter((q,i)=>check(i)).length/questions.length*100);
+ const doc=`<!doctype html><html><head><meta charset="utf-8"><title>Java If Statements — Quiz Report</title><style>body{font:15px/1.5 Arial;max-width:850px;margin:35px auto;padding:0 18px;color:#182338}h1{color:#2457c5}section{border-top:1px solid #ddd;padding:10px 0;break-inside:avoid}.score{font-size:24px;font-weight:bold}</style></head><body><h1>Java Unit Test Review — If Statements</h1><p>Generated: ${new Date().toLocaleString()}</p><p class="score">Score: ${questions.filter((q,i)=>check(i)).length}/${questions.length} (${pct}%)</p>${rows}</body></html>`;
+ const blob=new Blob([doc],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='java-if-statements-quiz-report.html';a.click();URL.revokeObjectURL(url);
+}
+function resetQuiz(){if(!confirm('Clear all answers and saved progress?'))return;Object.keys(answers).forEach(k=>delete answers[k]);localStorage.removeItem('javaIfReviewProgress');graded=false;document.getElementById('result').classList.remove('show');render();window.scrollTo({top:0,behavior:'smooth'})}
+render();
+</script>
+</body></html>
